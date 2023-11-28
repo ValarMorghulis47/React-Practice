@@ -4,7 +4,7 @@ function App() {
   console.log(import.meta.env.VITE_APPWRITE_URI);
   return (
     <>
-     <h1>Fuck Off</h1>
+     <h1>Blog Project</h1>
     </>
   )
 }
