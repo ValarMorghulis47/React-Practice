@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+.inputpass {
+  margin-top: 20px;
+}
+
+.inputpass button{
+  padding: 5px;
+  background-color: azure;
+  border-radius: 7px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#passcontain {
+  padding: 5px;
+  width: 20vw;
+  border-radius: 10px;
+}
+
+.first{
+  margin-top: 20px;
+}
+
+.first label{
+  margin-right: 35px;
+}
+
+#range{
+  margin-right: 35px;
+}
+
+#number{
+  margin-right: 5px;
+}
+
+#character{
+  margin-left: 5px;
+  margin-right: 5px;
+}
