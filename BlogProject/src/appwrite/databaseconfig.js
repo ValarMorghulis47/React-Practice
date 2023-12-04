@@ -1,5 +1,5 @@
 import { Client, ID, Databases, Storage, Query } from "appwrite";
-import configenvigenv from "../configenvigenv/configenvigenv.js"
+import configenv from "../configenv/configenv.js"
 
 export class Service{
     client = new Client();
@@ -8,13 +8,13 @@ export class Service{
     
     constructor(){
         this.client
-        .setEndpoint(configenv.appwriteUrl)
+        .setEndpoint(configenv.appwriteURI)
         .setProject(configenv.appwriteProjectId);
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}){
+    async createPost({title, slug, content, featuredImage, status, userid}){
         try {
             return await this.databases.createDocument(
                 configenv.appwriteDatabaseId,
@@ -25,7 +25,7 @@ export class Service{
                     content,
                     featuredImage,
                     status,
-                    userId,
+                    userid,
                 }
             )
         } catch (error) {
