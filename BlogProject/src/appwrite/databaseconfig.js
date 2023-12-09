@@ -94,9 +94,33 @@ export class Service{
     //     }
     // }
 
-    async getPosts(userid) {
+    // async getPosts(userid) {
+    //     try {
+    //         const filters = [Query.equal("userid", userid)];
+    
+    //         const result = await this.databases.listDocuments(
+    //             configenv.appwriteDatabaseId,
+    //             configenv.appwriteCollectionId,
+    //             filters
+    //         );
+    
+    //         return result.documents;
+    //     } catch (error) {
+    //         console.error("Error fetching posts:", error);
+    //         return [];
+    //     }
+    // }
+
+    async getPosts(userid = null) {
         try {
-            const filters = [Query.equal("userid", userid)];
+            let filters = [];
+    
+            if (userid !== null) {
+                filters.push(Query.equal("userid", userid));
+            } else {
+                // If userid is not provided, add a filter for status "active"
+                filters.push(Query.equal("status", "active"));
+            }
     
             const result = await this.databases.listDocuments(
                 configenv.appwriteDatabaseId,
@@ -110,6 +134,7 @@ export class Service{
             return [];
         }
     }
+    
     
 
     // file upload service

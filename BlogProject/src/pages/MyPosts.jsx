@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import appwriteService from "../appwrite/databaseconfig";
+import React, {useState, useEffect} from 'react'
 import { Container, PostCard } from '../components'
+import appwriteService from "../appwrite/databaseconfig";
 import { useSelector } from 'react-redux';
-
-function Home() {
+function AllPosts() {
     const [posts, setPosts] = useState([])
     const userData = useSelector((state) => state.auth.userData)
     const isLoggedIn = useSelector((state) => state.auth.isloggedin)
@@ -22,7 +21,7 @@ function Home() {
             // userData is not available or does not have $id property
             return;
         }
-        appwriteService.getPosts()
+        appwriteService.getPosts(userData.$id)
             .then((posts) => {
                 setPosts(posts)
 
@@ -110,4 +109,4 @@ function Home() {
     }
 }
 
-export default Home
+export default AllPosts
