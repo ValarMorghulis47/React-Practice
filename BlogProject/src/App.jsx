@@ -5,11 +5,11 @@ import {login, logout} from "./store/authSlice"
 import { Footer, Header } from './components'
 import authService from "./appwrite/auth"
 import { Outlet } from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
-
+  const isloggedin= useSelector((state) => state.auth.isloggedin)
   useEffect(() => {
     authService.getCurrentUser()
     .then((userData) => {
@@ -20,8 +20,8 @@ function App() {
       }
     })
     .finally(() => setLoading(false))
-  }, [])
-  return !loading ? (
+  }, [isloggedin])
+  return (
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block'>
         <Header />
@@ -31,7 +31,7 @@ function App() {
         <Footer />
       </div>
     </div>
-  ) : null
+  )
 }
 
 export default App

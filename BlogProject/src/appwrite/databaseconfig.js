@@ -81,20 +81,36 @@ export class Service{
         }
     }
 
-    async getPosts(queries = [Query.equal("status", "active")]){
+    // async getPosts(queries = [Query.equal("status", "active")]){
+    //     try {
+    //         return await this.databases.listDocuments(
+    //             configenv.appwriteDatabaseId,
+    //             configenv.appwriteCollectionId,
+    //             queries,
+    //         )
+    //     } catch (error) {
+    //         console.log("Appwrite serive :: getPosts :: error", error);
+    //         return false
+    //     }
+    // }
+
+    async getPosts(userid) {
         try {
-            return await this.databases.listDocuments(
+            const filters = [Query.equal("userid", userid)];
+    
+            const result = await this.databases.listDocuments(
                 configenv.appwriteDatabaseId,
                 configenv.appwriteCollectionId,
-                queries,
-                
-
-            )
+                filters
+            );
+    
+            return result.documents;
         } catch (error) {
-            console.log("Appwrite serive :: getPosts :: error", error);
-            return false
+            console.error("Error fetching posts:", error);
+            return [];
         }
     }
+    
 
     // file upload service
 
@@ -111,11 +127,11 @@ export class Service{
         }
     }
 
-    async deleteFile(fileId){
+    async deleteFile(featuredImage){
         try {
             await this.bucket.deleteFile(
                 configenv.appwriteBucketId,
-                fileId
+                featuredImage
             )
             return true
         } catch (error) {
@@ -124,7 +140,7 @@ export class Service{
         }
     }
 
-    getFilePreview(fileId){
+   getFilePreview(fileId){
         return this.bucket.getFilePreview(
             configenv.appwriteBucketId,
             fileId
