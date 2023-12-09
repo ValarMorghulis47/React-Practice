@@ -14,7 +14,7 @@ function PostCard({$id, title, featuredImage}) {
             </div>
             <h2
             className='text-xl font-bold'
-            >{title}</h2>
+            >Blog Title: {title}</h2>
         </div>
     </Link>
   )
