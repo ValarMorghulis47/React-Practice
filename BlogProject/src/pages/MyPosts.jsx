@@ -5,10 +5,7 @@ import { useSelector } from 'react-redux';
 function AllPosts() {
     const [posts, setPosts] = useState([])
     const userData = useSelector((state) => state.auth.userData)
-    const isLoggedIn = useSelector((state) => state.auth.isloggedin)
-    console.log(userData);
-    console.log(posts)
-    console.log(isLoggedIn)
+    const postData = useSelector((state) => state.post.postData)
     // useEffect(() => {
     //     appwriteService.getPosts().then((posts) => {
     //         if (posts) {
@@ -16,20 +13,20 @@ function AllPosts() {
     //         }
     //     })
     // }, [])
-    useEffect(() => {
-        if (!userData) {
-            // userData is not available or does not have $id property
-            return;
-        }
-        appwriteService.getPosts(userData.$id)
-            .then((posts) => {
-                setPosts(posts)
+    // useEffect(() => {
+    //     if (!postData) {
+    //         // userData is not available or does not have $id property
+    //         return;
+    //     }
+    //     // appwriteService.getPosts(userData.$id)
+    //     //     .then((posts) => {
+    //     //         setPosts(posts)
 
-            })
-            .catch((error) => {
-                console.error("Error fetching posts:", error);
-            })
-    }, [userData, isLoggedIn]);
+    //     //     })
+    //     //     .catch((error) => {
+    //     //         console.error("Error fetching posts:", error);
+    //     //     })
+    // }, [isLoggedIn]);
 
     // if (posts.length === 0) {
     //     return (
@@ -46,24 +43,7 @@ function AllPosts() {
     //         </div>
     //     )
     // }
-
-    if (isLoggedIn === false) {
-        return (
-            <div className="w-full py-8 mt-4 text-center">
-                <Container>
-                    <div className="flex flex-wrap">
-                        <div className="p-2 w-full">
-                            <h1 className="text-2xl font-bold hover:text-gray-500">
-                                Login To Read Posts
-                            </h1>
-                        </div>
-                    </div>
-                </Container>
-            </div>
-        )
-    }
-    else {
-        if (posts.length === 0) {
+        if (postData.length === 0) {
             return (
                 <div className="w-full py-8 mt-4 text-center">
                     <Container>
@@ -96,7 +76,7 @@ function AllPosts() {
                     })}
                 </div> */}
                         <div className='flex flex-wrap'>
-                            {posts.map((post) => (
+                            {postData.map((post) => (
                                 <div key={post.$id} className='p-2 w-1/4'>
                                     <PostCard {...post} />
                                 </div>
@@ -106,7 +86,7 @@ function AllPosts() {
                 </div>
             )
         }
-    }
+    
 }
 
 export default AllPosts

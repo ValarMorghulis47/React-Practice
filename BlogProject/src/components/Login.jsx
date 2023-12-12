@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import { login as authLogin, IsLoggedIn } from '../store/authSlice'
+import { login as authLogin} from '../store/authSlice'
+import { postdata } from '../store/postSlice'
 import {Button, Input, Logo} from "./index"
 import {useDispatch} from "react-redux"
 import authService from "../appwrite/auth"
 import {useForm} from "react-hook-form"
-
+import databaseService from "../appwrite/databaseconfig"
 function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -18,11 +19,14 @@ function Login() {
             const session = await authService.login({...data})
             if (session) {
                 const userData = await authService.getCurrentUser()
+                const postData= await databaseService.getPosts(userData.$id);
                 if(userData) {
                     dispatch(authLogin(userData))
-                    dispatch(IsLoggedIn())
-                };
-                console.log(userData)
+                    dispatch(postdata({ postData: postData }));
+                    console.log(postData)
+                    console.log(userData)
+                }
+                console.log("Redux State:", store.getState());
                 navigate("/")
             }
         } catch (error) {

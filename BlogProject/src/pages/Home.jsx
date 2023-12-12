@@ -6,23 +6,11 @@ import { useSelector } from 'react-redux';
 function Home() {
     const [posts, setPosts] = useState([])
     const userData = useSelector((state) => state.auth.userData)
-    const isLoggedIn = useSelector((state) => state.auth.isloggedin)
-    console.log(userData);
-    console.log(posts)
-    console.log(isLoggedIn)
-    // useEffect(() => {
-    //     appwriteService.getPosts().then((posts) => {
-    //         if (posts) {
-    //             setPosts(posts.documents)
-    //         }
-    //     })
-    // }, [])
+    const postData = useSelector((state) => state.post.postData)
+    const userStatus = useSelector((state) => state.auth.status)
+    console.log(postData);
     useEffect(() => {
-        if (!userData) {
-            // userData is not available or does not have $id property
-            return;
-        }
-        appwriteService.getPosts()
+       appwriteService.getPosts()
             .then((posts) => {
                 setPosts(posts)
 
@@ -30,25 +18,9 @@ function Home() {
             .catch((error) => {
                 console.error("Error fetching posts:", error);
             })
-    }, [userData, isLoggedIn]);
+    }, [userStatus]);
 
-    // if (posts.length === 0) {
-    //     return (
-    //         <div className="w-full py-8 mt-4 text-center">
-    //             <Container>
-    //                 <div className="flex flex-wrap">
-    //                     <div className="p-2 w-full">
-    //                         <h1 className="text-2xl font-bold hover:text-gray-500">
-    //                             Add a post to see one
-    //                         </h1>
-    //                     </div>
-    //                 </div>
-    //             </Container>
-    //         </div>
-    //     )
-    // }
-
-    if (isLoggedIn === false) {
+    if (userStatus === false) {
         return (
             <div className="w-full py-8 mt-4 text-center">
                 <Container>
@@ -83,19 +55,6 @@ function Home() {
             return (
                 <div className='w-full py-8'>
                     <Container>
-                        {/* <div className='flex flex-wrap'>
-                    {posts.map((post) => {
-                        if (post.userid===userData.$id) {
-                            return (<div key={post.$id} className='p-2 w-1/4'>
-                            <PostCard {...post} />
-                        </div>)
-                        }
-                        else{
-                            console.log(post.userid)
-                            return null
-                        }
-                    })}
-                </div> */}
                         <div className='flex flex-wrap'>
                             {posts.map((post) => (
                                 <div key={post.$id} className='p-2 w-1/4'>
