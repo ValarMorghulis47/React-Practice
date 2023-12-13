@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     postData: null,
+    AllPost: null,
 }
 
 const postSlice = createSlice({
@@ -9,15 +10,18 @@ const postSlice = createSlice({
     initialState,
     reducers: {
         postdata: (state, action) => {
-            console.log("Dispatched Action Payload:", action.payload);
             state.postData = action.payload.postData;
+        },
+        AllPost: (state, action)=>{
+            state.AllPost = action.payload.AllPost;
         },
         dataclear: (state) => {
             state.postData = null;
+            state.AllPost = null;
         }
      }
 })
 
-export const {postdata, dataclear} = postSlice.actions;
+export const {postdata, dataclear, AllPost} = postSlice.actions;
 
 export default postSlice.reducer;
