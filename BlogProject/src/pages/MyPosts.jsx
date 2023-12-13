@@ -3,6 +3,7 @@ import { Container, PostCard } from '../components'
 import { useSelector } from 'react-redux';
 function AllPosts() {
     const postData = useSelector((state) => state.post.postData)
+    console.log(postData)
         if (postData?.length === 0) {
             return (
                 <div className="w-full py-8 mt-4 text-center">

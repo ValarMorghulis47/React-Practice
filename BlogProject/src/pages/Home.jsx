@@ -3,9 +3,8 @@ import { Container, PostCard } from '../components'
 import { useSelector } from 'react-redux';
 function Home() {
     const allpost = useSelector((state) => state.post.AllPost)
+    console.log(allpost)
     const userStatus = useSelector((state) => state.auth.status)
-    const userData = useSelector((state) => state.auth.userData);
-    console.log(userData)
     if (userStatus === false) {
         return (
             <div className="w-full py-8 mt-4 text-center">

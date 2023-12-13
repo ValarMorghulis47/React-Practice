@@ -40,7 +40,7 @@ function App() {
       }
     })
     .finally(() => setLoading(false))
-  }, [userStatus])
+  }, [userStatus,dispatch])
   
   const getpostspecific = (userData) => (databaseService.getPosts(userData.$id).then((post) => {
     if (post) {

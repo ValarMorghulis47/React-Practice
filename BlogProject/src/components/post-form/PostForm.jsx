@@ -4,7 +4,9 @@ import { Button, Input, RTE, Select } from "../index";
 import appwriteService from "../../appwrite/databaseconfig";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { AllPost, dataclear } from "../../store/postSlice"
+import { postdata } from "../../store/postSlice"
+import { useDispatch } from 'react-redux'
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -14,7 +16,7 @@ export default function PostForm({ post }) {
             status: post?.status || "active",
         },
     });
-
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
     const submit = async (data) => {
@@ -31,6 +33,8 @@ export default function PostForm({ post }) {
             });
 
             if (dbPost) {
+                dispatch(postdata({ postData: dbPost }));
+                dispatch(AllPost({ AllPost: dbPost }));
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
@@ -43,6 +47,8 @@ export default function PostForm({ post }) {
                 const dbPost = await appwriteService.createPost({ ...data, userid: userData.$id });
 
                 if (dbPost) {
+                    dispatch(postdata({ postData: dbPost }));
+                    dispatch(AllPost({AllPost: dbPost }));
                     navigate(`/post/${dbPost.$id}`);
                 }
             }
