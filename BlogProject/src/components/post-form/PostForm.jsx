@@ -19,6 +19,8 @@ export default function PostForm({ post }) {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
+    const allpost = useSelector((state) => state.post.AllPost)
+    const postData = useSelector((state) => state.post.postData)
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
@@ -33,8 +35,8 @@ export default function PostForm({ post }) {
             });
 
             if (dbPost) {
-                dispatch(postdata({ postData: dbPost }));
-                dispatch(AllPost({ AllPost: dbPost }));
+                dispatch(postdata({ postData:[...postData, dbPost]}));
+                dispatch(AllPost({ AllPost:[...allpost, dbPost]}));
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
@@ -47,8 +49,8 @@ export default function PostForm({ post }) {
                 const dbPost = await appwriteService.createPost({ ...data, userid: userData.$id });
 
                 if (dbPost) {
-                    dispatch(postdata({ postData: dbPost }));
-                    dispatch(AllPost({AllPost: dbPost }));
+                    dispatch(postdata({ postData:[...postData, dbPost]}));
+                dispatch(AllPost({ AllPost:[...allpost, dbPost]}));
                     navigate(`/post/${dbPost.$id}`);
                 }
             }

@@ -12,8 +12,6 @@ import { postdata } from "./store/postSlice"
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
-  const allpost = useSelector((state) => state.post.AllPost)
-  const postData = useSelector((state) => state.post.postData)
   const userStatus = useSelector((state) => state.auth.status)
   useEffect(() => {
     authService.getCurrentUser()

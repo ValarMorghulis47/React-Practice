@@ -18,6 +18,12 @@ const postSlice = createSlice({
             console.log("Dispatched payload::", action.payload)
             state.AllPost = action.payload.AllPost;
         },
+        deletePost: (state, action) => {
+            // Remove the deleted post from the state
+            const postIdToDelete = action.payload.postId;
+            state.AllPost = state.AllPost.filter(post => post.$id !== postIdToDelete);
+            state.postData = state.postData.filter(post => post.$id !== postIdToDelete);
+          },
         dataclear: (state) => {
             state.postData = null;
             state.AllPost = null;
@@ -25,6 +31,6 @@ const postSlice = createSlice({
      }
 })
 
-export const {postdata, dataclear, AllPost} = postSlice.actions;
+export const {postdata, dataclear, AllPost, deletePost} = postSlice.actions;
 
 export default postSlice.reducer;
