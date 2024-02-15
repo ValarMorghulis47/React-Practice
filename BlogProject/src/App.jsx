@@ -17,23 +17,17 @@ function App() {
     authService.getCurrentUser()
       .then((userData) => {
         if (userData) {
-          console.log("I am in if of login and userdata")
-          console.log(userData)
           dispatch(login({ userData: userData}))
           getpostspecific(userData)
         } else {
-          console.log("I am in else of logout")
           dispatch(logout())
         }
       })
     databaseService.getPosts().then((allposts) => {
       if (allposts) {
-        console.log("I am in if of allposts")
-
         dispatch(AllPost({ AllPost: allposts }))
       }
       else {
-        console.log("i am in else of allpost")
         dispatch(dataclear())
       }
     })
@@ -42,12 +36,9 @@ function App() {
   
   const getpostspecific = (userData) => (databaseService.getPosts(userData.$id).then((post) => {
     if (post) {
-      console.log("I am in if of specific post")
-
       dispatch(postdata({ postData: post }))
     }
     else {
-      console.log("i am in else of specificpost")
       dispatch(dataclear())
     }
   }))

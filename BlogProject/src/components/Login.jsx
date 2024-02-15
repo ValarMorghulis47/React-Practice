@@ -21,7 +21,7 @@ function Login() {
                 const userData = await authService.getCurrentUser()
                 const postData= await databaseService.getPosts(userData.$id)
                 if(userData) {
-                    dispatch(login({ userData: userData}))
+                    dispatch(authLogin({ userData: userData}))
                     dispatch(postdata({ postData: postData }))
                 }
                navigate("/")
